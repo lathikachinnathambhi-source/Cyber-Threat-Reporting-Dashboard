@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Cyber Threat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Threat Report</h1>
+
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <p class="message">{{ message }}</p>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST"
+              action="{{ url_for('edit_threat', threat_id=threat.id) }}">
+
+            <label for="threat_type">Threat Type</label>
+            <input type="text" id="threat_type" name="threat_type"
+                   value="{{ threat.threat_type }}" maxlength="100" required>
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description"
+                      rows="5" maxlength="5000" required>{{ threat.description }}</textarea>
+
+            <label for="severity">Severity</label>
+            <select id="severity" name="severity" required>
+                <option value="Low" {% if threat.severity == 'Low' %}selected{% endif %}>Low</option>
+                <option value="Medium" {% if threat.severity == 'Medium' %}selected{% endif %}>Medium</option>
+                <option value="High" {% if threat.severity == 'High' %}selected{% endif %}>High</option>
+            </select>
+
+            <label for="status">Report Status</label>
+            <select id="status" name="status" required>
+                <option value="Open" {% if threat.status == 'Open' %}selected{% endif %}>Open</option>
+                <option value="In Progress" {% if threat.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                <option value="Resolved" {% if threat.status == 'Resolved' %}selected{% endif %}>Resolved</option>
+            </select>
+
+            <button type="submit">Update Report</button>
+        </form>
+
+        <p><a href="{{ url_for('dashboard') }}">Cancel and Return</a></p>
+    </div>
+</body>
+</html>

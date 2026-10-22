@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Cyber Threat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Report a Cyber Threat</h1>
+        <p>Enter the details of the cybersecurity incident.</p>
+
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <p class="message">{{ message }}</p>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('add_threat') }}">
+            <label for="threat_type">Threat Type</label>
+            <select id="threat_type" name="threat_type" required>
+                <option value="">Select threat type</option>
+                <option value="Phishing">Phishing</option>
+                <option value="Malware">Malware</option>
+                <option value="Ransomware">Ransomware</option>
+                <option value="Data Breach">Data Breach</option>
+                <option value="Identity Theft">Identity Theft</option>
+                <option value="Suspicious Login">Suspicious Login</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="description">Threat Description</label>
+            <textarea id="description" name="description"
+                      rows="5" maxlength="5000"
+                      placeholder="Describe the incident..." required></textarea>
+
+            <label for="severity">Severity</label>
+            <select id="severity" name="severity" required>
+                <option value="">Select severity</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+
+            <button type="submit">Submit Threat Report</button>
+        </form>
+
+        <p><a href="{{ url_for('dashboard') }}">Back to Dashboard</a></p>
+    </div>
+</body>
+</html>
